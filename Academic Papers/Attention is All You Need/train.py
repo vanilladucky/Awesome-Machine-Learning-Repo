@@ -16,7 +16,7 @@ class train:
     def forward(self):
         self.model = get_model()
         self.model.train()
-        self.optim = optim.Adam(self.model.parameters(), lr=0.0005, betas=(0.9, 0.98), eps=1e-9)
+        self.optim = optim.Adam(self.model.parameters(), lr=0.001, betas=(0.9, 0.98), eps=1e-9)
         self.model = self.model.to(self.device)
         self.criterion.to(self.device)
         train_loss_arr = []
