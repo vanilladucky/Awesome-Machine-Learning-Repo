@@ -54,6 +54,9 @@ class get_data:
         eng, fre = a[:len(self.eng_eng_encoded)], a[len(self.eng_eng_encoded):]
         return eng[-1000:], fre[-1000:]
 
+    def reset(self):
+        self.index = 0
+
     def __next__(self):
         if self.index * self.bs < len(self.eng_data):
             self.index+=1
