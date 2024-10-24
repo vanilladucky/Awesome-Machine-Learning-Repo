@@ -52,7 +52,7 @@ class get_data:
         t = self.eng_eng_encoded + self.french_eng_encoded
         a = pad_sequence(t, batch_first=True)
         eng, fre = a[:len(self.eng_eng_encoded)], a[len(self.eng_eng_encoded):]
-        return eng, fre
+        return eng[-1000:], fre[-1000:]
 
     def __next__(self):
         if self.index * self.bs < len(self.eng_data):

@@ -121,7 +121,7 @@ class Transformer(nn.Module):
         src_mask = (src != 0).unsqueeze(1).unsqueeze(2)
         tgt_mask = (tgt != 0).unsqueeze(1).unsqueeze(2)
         seq_length = tgt.size(1)
-        nopeak_mask = (1 - torch.triu(torch.ones(1, seq_length, seq_length), diagonal=1)).bool().to(torch.device('mps'))
+        nopeak_mask = (1 - torch.triu(torch.ones(1, seq_length, seq_length), diagonal=1)).bool().to(torch.device('cuda'))
         tgt_mask = tgt_mask & nopeak_mask
         return src_mask, tgt_mask
 
@@ -151,7 +151,7 @@ def get_model(src_vocab_size = 29760,
                 dropout = 0.1
                 ):
     model = Transformer(src_vocab_size, tgt_vocab_size, d_model, num_heads, num_layers, d_ff, max_seq_length, dropout)
-    device = torch.device('mps')
+    device = torch.device('cuda')
     model = model.to(device)
     return model 
 

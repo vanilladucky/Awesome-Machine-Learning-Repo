@@ -12,7 +12,7 @@ class train:
         self.optim = optim.Adam(self.model.parameters(), lr=0.0001, betas=(0.9, 0.98), eps=1e-9)
         self.criterion = nn.CrossEntropyLoss(ignore_index=0)
         self.n_epochs = 50
-        self.device = torch.device('mps')
+        self.device = torch.device('cuda')
 
     def forward(self):
         self.model.train()
