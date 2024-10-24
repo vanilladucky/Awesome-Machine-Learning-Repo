@@ -15,12 +15,12 @@ class train:
         self.model = get_model()
         self.model.train()
         self.optim = optim.Adam(self.model.parameters(), lr=0.0005, betas=(0.9, 0.98), eps=1e-9)
-        self.data = get_data(bs = 64)
         self.model = self.model.to(self.device)
         self.criterion.to(self.device)
         for epoch in tqdm(range(self.n_epochs)):
-            train_loss = 0
-            count = 0
+            self.data = get_data(bs = 64)
+            train_loss = [0]
+            count = [0]
             self.optim.zero_grad()
             try:
                 while True:
@@ -33,10 +33,10 @@ class train:
                     self.optim.step()
                     if count % 10 == 0:
                         print(f"==== Loss: {loss.item()} ====")
-                    train_loss += loss.item()
-                    count+=1
+                    train_loss[0] += loss.item()
+                    count[0]+=1
             except:
-                print(f"==== Average loss: {train_loss/count} ====")
+                print(f"==== Average loss: {train_loss[0]/count[0]} ====")
                 continue
 
 t = train()
