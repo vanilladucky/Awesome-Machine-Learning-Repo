@@ -34,7 +34,7 @@ class train:
                     loss = self.criterion(output.contiguous().view(-1, 24053), fre[:, 1:].contiguous().view(-1))
                     loss.backward()
                     self.optim.step()
-                    if count % 10 == 0:
+                    if count[0] % 10 == 0:
                         print(f"==== Loss: {loss.item()} ====")
                     train_loss[0] += loss.item()
                     train_loss_arr.append(loss.item())
