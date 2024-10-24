@@ -7,15 +7,15 @@ from tqdm import tqdm
 
 class train:
     def __init__(self):
-        self.data = get_data(bs = 128)
-        self.model = get_model()
-        self.optim = optim.Adam(self.model.parameters(), lr=0.0001, betas=(0.9, 0.98), eps=1e-9)
         self.criterion = nn.CrossEntropyLoss(ignore_index=0)
         self.n_epochs = 50
         self.device = torch.device('cuda')
 
     def forward(self):
+        self.model = get_model()
         self.model.train()
+        self.optim = optim.Adam(self.model.parameters(), lr=0.0005, betas=(0.9, 0.98), eps=1e-9)
+        self.data = get_data(bs = 64)
         self.model = self.model.to(self.device)
         self.criterion.to(self.device)
         for epoch in tqdm(range(self.n_epochs)):
@@ -31,7 +31,8 @@ class train:
                     loss = self.criterion(output.contiguous().view(-1, 24053), fre[:, 1:].contiguous().view(-1))
                     loss.backward()
                     self.optim.step()
-                    print(f"==== Loss: {loss.item()} ====")
+                    if count % 10 == 0:
+                        print(f"==== Loss: {loss.item()} ====")
                     train_loss += loss.item()
                     count+=1
             except:
